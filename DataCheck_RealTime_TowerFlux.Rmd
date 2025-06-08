@@ -6,7 +6,7 @@ runtime: shiny
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE) 
 # load required libraries
 library(flexdashboard)
 library(data.table)
