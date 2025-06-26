@@ -16,7 +16,7 @@ library(reshape2)
 library(bigleaf)
 
 # import data 
-basedir <- "C:/Users/vmartinez62/OneDrive - University of Texas at El Paso/CZO_Data/Bahada/SapFlowNet/SoilProbes/Data/ASCII"
+basedir <- "C:/Users/memauritz/OneDrive - University of Texas at El Paso/CZO_Data/Bahada/SapFlowNet/SoilProbes/Data/ASCII"
 setwd(basedir)
 
 # read column names and units
