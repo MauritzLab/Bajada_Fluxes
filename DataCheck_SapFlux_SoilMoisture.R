@@ -14,7 +14,7 @@ library(readxl)
 library(cowplot)
 library(reshape2)
 library(bigleaf)
-
+ 
 # import data 
 basedir <- "C:/Users/memauritz/OneDrive - University of Texas at El Paso/Bahada/SapFlowNet/SoilProbes/Data/ASCII"
 setwd(basedir)
