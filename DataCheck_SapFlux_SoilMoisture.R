@@ -16,7 +16,7 @@ library(reshape2)
 library(bigleaf)
 
 # import data 
-basedir <- "C:/Users/memauritz/OneDrive - University of Texas at El Paso/CZO_Data/Bahada/SapFlowNet/SoilProbes/Data/ASCII"
+basedir <- "C:/Users/memauritz/OneDrive - University of Texas at El Paso/Bahada/SapFlowNet/SoilProbes/Data/ASCII"
 setwd(basedir)
 
 # read column names and units
@@ -43,7 +43,7 @@ sfn_soildat2 <- do.call("rbind", lapply(sfn_files, header = FALSE, fread, sep=",
                                        fill=TRUE, na.strings=c(-9999,"#NAME?"), col.names=colnames(sfn_soildat_colnames1)))
 
 # read metadata for probe IDs (accurate after 10-27-2023 when probes were moved from mesquite 2 to 5cm at M1, C2, bare)
-sfn_metadata <- fread("C:/Users/vmartinez62/OneDrive - University of Texas at El Paso/CZO_Data/Bahada/SapFlowNet/SoilProbes/sapfluxProbeID_Metadata.csv")
+sfn_metadata <- fread("C:/Users/memauritz/OneDrive - University of Texas at El Paso/Bahada/SapFlowNet/SoilProbes/sapfluxProbeID_Metadata.csv")
 
 # merge both data files
 sfn_soildat <- rbind(sfn_soildat1, sfn_soildat2)
