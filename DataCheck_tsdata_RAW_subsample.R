@@ -32,7 +32,7 @@ ts.all <- do.call("rbind", lapply(ts_files, header = FALSE, fread, sep=",", skip
 max(ts.all$TIMESTAMP)
 
 # MODIFY AS NEEDED: subset the data to include only the last month (or since desired date)
-ts <- copy(ts.all[TIMESTAMP>as.Date("2024-07-05")])
+ts <- copy(ts.all[TIMESTAMP>as.Date("2025-06-12")])
 
 # CO2 concentrations
 # Check: how well do patterns match between open and closed path
@@ -117,7 +117,7 @@ p.T.sonic <- ggplot(ts, aes(TIMESTAMP, Ts))+
 # Check: do patterns and magnitudes match?
 plot_grid(p.T.c, p.T.sonic)
 
-# graph 1:1 of sonic and open path temp
+# graph 1:1 of sonic and closed path temp
 ggplot(ts, aes(Ts, tmpr_avg_7200_raw))+
   geom_point(size=1)+
   geom_abline(intercept=0,slope=1, colour="red", linetype="dashed")+
