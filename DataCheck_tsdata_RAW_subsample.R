@@ -130,6 +130,13 @@ ggplot(ts, aes(TIMESTAMP, press_tot_7200_raw))+
   geom_line(linewidth=0.5)+
   labs(title="Closed Path 7200 Atmospheric Pressure")
 
+# graph 1:1 of closed path pressure and atm_press (where is atm_press measured??? 7500?? or is it in he DL box?)
+# they don't match. Do these make sense to compare?! Not sure. 
+ggplot(ts, aes(atm_press,press_tot_7200_raw))+
+  geom_point(size=1)+
+  geom_abline(intercept=0,slope=1, colour="red", linetype="dashed")+
+  labs(title="Atmospheric Pressure: atm_press vs Closed Path")
+
 #-----------
   
 # specific time periods of closed-path CO2
