@@ -32,7 +32,7 @@ ts.all <- do.call("rbind", lapply(ts_files, header = FALSE, fread, sep=",", skip
 max(ts.all$TIMESTAMP)
 
 # MODIFY AS NEEDED: subset the data to include only the last month (or since desired date)
-ts <- copy(ts.all[TIMESTAMP>as.Date("2025-09-01")])
+ts <- copy(ts.all[TIMESTAMP>as.Date("2025-10-20")])
 
 # CO2 concentrations
 # Check: how well do patterns match between open and closed path
