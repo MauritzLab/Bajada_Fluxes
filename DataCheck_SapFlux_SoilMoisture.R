@@ -79,7 +79,7 @@ sfn_soildat %>% filter(datetime>as.Date("2023-08-10")&
 #creosote_1 does not have 5cm probe sensor
 
 # SET  A CHECK DATE TO EASILY GRAPH ALL DATA FROM THE SPECIFIED START DATE
-checkdate <- as.Date("2025-06-01")
+checkdate <- as.Date("2025-11-01")
 
 # graph data by metric and color by number
 sfn_soildat %>% filter(datetime>as.Date(checkdate)&
