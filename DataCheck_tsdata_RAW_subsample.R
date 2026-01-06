@@ -14,7 +14,7 @@ library(cowplot)
 # list all files on E drive for ts_data2 subsampled to 1 minute
 #ts_files <- list.files(path="/Volumes/Data/Bahada/CR3000/L1/EddyCovariance_ts_2/2024_1min", full.names=TRUE) 
 #ts_files <- list.files(path="C:/Users/vmartinez62/OneDrive - University of Texas at El Paso/CZO_Data/Bahada/CR3000/L1/EddyCovariance_ts_2/2024_1min", full.names=TRUE)
-ts_files <- list.files(path="Y:/Bahada/CR3000/L1/EddyCovariance_ts_2/2025_1min", full.names=TRUE)
+ts_files <- list.files(path="Y:/Bahada/CR3000/L1/EddyCovariance_ts_2/2026_1min", full.names=TRUE)
 
 # read and merge all files
 ts.all <- do.call("rbind", lapply(ts_files, header = FALSE, fread, sep=",", skip = 4,fill=TRUE,
