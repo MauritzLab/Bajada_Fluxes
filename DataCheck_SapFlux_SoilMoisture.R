@@ -68,7 +68,7 @@ sfn_soildat <- sfn_soildat %>%
 sfn_soildat <- right_join(sfn_soildat,sfn_metadata, by="measurement")
   
 # graph to check datalogger voltage and paneltemp
-sfn_soildat %>% filter(datetime>as.Date("2023-08-10")&
+sfn_soildat %>% filter(datetime>as.Date("2025-12-12")&
                          metric %in% c("BattV_Avg","PTemp_C_Avg"))%>%
   ggplot(., aes(datetime, value))+
   geom_line()+
@@ -79,7 +79,7 @@ sfn_soildat %>% filter(datetime>as.Date("2023-08-10")&
 #creosote_1 does not have 5cm probe sensor
 
 # SET  A CHECK DATE TO EASILY GRAPH ALL DATA FROM THE SPECIFIED START DATE
-checkdate <- as.Date("2025-11-01")
+checkdate <- as.Date("2025-12-12")
 
 # graph data by metric and color by number
 sfn_soildat %>% filter(datetime>as.Date(checkdate)&
