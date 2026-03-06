@@ -38,8 +38,8 @@ sfn_soildat1 <- fread("BajadaCR1000XSapFlowSoilMoisture_SoilData_SapFlow.dat",
 # list all 26185.Sapflow files
 sfn_files <- list.files(path=basedir,full.names=TRUE, pattern="26185.Sapflow_Soil")
 
-# import and combine data from sfn_files
-sfn_soildat2 <- do.call("rbind", lapply(sfn_files, header = FALSE, fread, sep=",", dec=".",skip = 4,
+# import and combine data from sfn_files, select specific files
+sfn_soildat2 <- do.call("rbind", lapply(sfn_files[27:30], header = FALSE, fread, sep=",", dec=".",skip = 4,
                                        fill=TRUE, na.strings=c(-9999,"#NAME?"), col.names=colnames(sfn_soildat_colnames1)))
 
 # read metadata for probe IDs (accurate after 10-27-2023 when probes were moved from mesquite 2 to 5cm at M1, C2, bare)
@@ -68,7 +68,7 @@ sfn_soildat <- sfn_soildat %>%
 sfn_soildat <- right_join(sfn_soildat,sfn_metadata, by="measurement")
   
 # graph to check datalogger voltage and paneltemp
-sfn_soildat %>% filter(datetime>as.Date("2025-12-12")&
+sfn_soildat %>% filter(datetime>as.Date("2025-11-20")&
                          metric %in% c("BattV_Avg","PTemp_C_Avg"))%>%
   ggplot(., aes(datetime, value))+
   geom_line()+
@@ -79,7 +79,7 @@ sfn_soildat %>% filter(datetime>as.Date("2025-12-12")&
 #creosote_1 does not have 5cm probe sensor
 
 # SET  A CHECK DATE TO EASILY GRAPH ALL DATA FROM THE SPECIFIED START DATE
-checkdate <- as.Date("2025-12-12")
+checkdate <- as.Date("2025-11-20")
 
 # graph data by metric and color by number
 sfn_soildat %>% filter(datetime>as.Date(checkdate)&
