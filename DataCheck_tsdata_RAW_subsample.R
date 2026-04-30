@@ -20,7 +20,7 @@ ts_files <- list.files(path="C:/Users/memauritz/OneDrive - University of Texas a
 
 # read and merge all files
 # Modify files to read in to keep more manageable overall file length
-ts.all <- do.call("rbind", lapply(ts_files[91:114], header = FALSE, fread, sep=",", skip = 4,fill=TRUE,
+ts.all <- do.call("rbind", lapply(ts_files[99:117], header = FALSE, fread, sep=",", skip = 4,fill=TRUE,
                               na.strings=c(-9999,"#NAME?"),
                               col.names=c("TIMESTAMP",
                                           "RECORD",
