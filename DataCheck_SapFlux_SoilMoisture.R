@@ -39,7 +39,7 @@ sfn_soildat1 <- fread("BajadaCR1000XSapFlowSoilMoisture_SoilData_SapFlow.dat",
 sfn_files <- list.files(path=basedir,full.names=TRUE, pattern="26185.Sapflow_Soil")
 
 # import and combine data from sfn_files, select specific files
-sfn_soildat2 <- do.call("rbind", lapply(sfn_files[31:33], header = FALSE, fread, sep=",", dec=".",skip = 4,
+sfn_soildat2 <- do.call("rbind", lapply(sfn_files[32:34], header = FALSE, fread, sep=",", dec=".",skip = 4,
                                        fill=TRUE, na.strings=c(-9999,"#NAME?"), col.names=colnames(sfn_soildat_colnames1)))
 
 # read metadata for probe IDs (accurate after 10-27-2023 when probes were moved from mesquite 2 to 5cm at M1, C2, bare)
