@@ -14,9 +14,9 @@ library(readxl)
 library(cowplot)
 library(reshape2)
 library(bigleaf)
-
+ 
 # import data 
-basedir <- "C:/Users/vmartinez62/OneDrive - University of Texas at El Paso/CZO_Data/Bahada/SapFlowNet/SoilProbes/Data/ASCII"
+basedir <- "C:/Users/memauritz/OneDrive - University of Texas at El Paso/Bahada/SapFlowNet/SoilProbes/Data/ASCII"
 setwd(basedir)
 
 # read column names and units
@@ -38,12 +38,12 @@ sfn_soildat1 <- fread("BajadaCR1000XSapFlowSoilMoisture_SoilData_SapFlow.dat",
 # list all 26185.Sapflow files
 sfn_files <- list.files(path=basedir,full.names=TRUE, pattern="26185.Sapflow_Soil")
 
-# import and combine data from sfn_files
-sfn_soildat2 <- do.call("rbind", lapply(sfn_files, header = FALSE, fread, sep=",", dec=".",skip = 4,
+# import and combine data from sfn_files, select specific files
+sfn_soildat2 <- do.call("rbind", lapply(sfn_files[32:34], header = FALSE, fread, sep=",", dec=".",skip = 4,
                                        fill=TRUE, na.strings=c(-9999,"#NAME?"), col.names=colnames(sfn_soildat_colnames1)))
 
 # read metadata for probe IDs (accurate after 10-27-2023 when probes were moved from mesquite 2 to 5cm at M1, C2, bare)
-sfn_metadata <- fread("C:/Users/vmartinez62/OneDrive - University of Texas at El Paso/CZO_Data/Bahada/SapFlowNet/SoilProbes/sapfluxProbeID_Metadata.csv")
+sfn_metadata <- fread("C:/Users/memauritz/OneDrive - University of Texas at El Paso/Bahada/SapFlowNet/SoilProbes/Metadata/sapfluxProbeID_Metadata.csv")
 
 # merge both data files
 sfn_soildat <- rbind(sfn_soildat1, sfn_soildat2)
@@ -68,7 +68,7 @@ sfn_soildat <- sfn_soildat %>%
 sfn_soildat <- right_join(sfn_soildat,sfn_metadata, by="measurement")
   
 # graph to check datalogger voltage and paneltemp
-sfn_soildat %>% filter(datetime>as.Date("2023-08-10")&
+sfn_soildat %>% filter(datetime>as.Date("2025-11-20")&
                          metric %in% c("BattV_Avg","PTemp_C_Avg"))%>%
   ggplot(., aes(datetime, value))+
   geom_line()+
@@ -78,17 +78,19 @@ sfn_soildat %>% filter(datetime>as.Date("2023-08-10")&
 #data after this is after mesquite_23 probes were removed and placed at 5cm depth at bare, creosote_1,creosote_2 and mesquite_1
 #creosote_1 does not have 5cm probe sensor
 
+# SET  A CHECK DATE TO EASILY GRAPH ALL DATA FROM THE SPECIFIED START DATE
+checkdate <- as.Date("2026-04-30")
 
-# # graph data by metric and color by number 
-# sfn_soildat %>% filter(datetime>as.Date("2023-10-27")&
-#                           #probe.num %in% c(NA,1,2,3)&
-#                           metric %in% c("T","Temp","VWC","WaterPot"))%>%
-# ggplot(., aes(datetime, value,color=factor(depth)))+
-#   geom_line()+
-#   facet_grid(metric~location,scales="free_y")
+# graph data by metric and color by number
+sfn_soildat %>% filter(datetime>as.Date(checkdate)&
+                          #probe.num %in% c(NA,1,2,3)&
+                          metric %in% c("T","Temp","VWC","WaterPot"))%>%
+ggplot(., aes(datetime, value,color=factor(depth)))+
+  geom_line()+
+  facet_grid(metric~location,scales="free_y")
 
 #graph # graph data by metric and color by number with VWC values less than one
-sfn_soildat %>% filter(datetime>as.Date("2023-10-27")&
+sfn_soildat %>% filter(datetime>as.Date(checkdate)&
                          #probe.num %in% c(NA,1,2,3)&
                          ((metric=="VWC"&value<=1)|metric %in% c("T","Temp","WaterPot")))%>%
   ggplot(., aes(datetime, value,color=factor(depth)))+
@@ -97,7 +99,7 @@ sfn_soildat %>% filter(datetime>as.Date("2023-10-27")&
 
 
 #graph VWC and T from CS650 without 5cm
-sfn_soildat %>% filter(datetime>as.Date("2023-10-27")&
+sfn_soildat %>% filter(datetime>as.Date(checkdate)&
                          #probe.num %in% c(NA,1,2,3)&
                          metric %in% c("T","VWC")&
                          depth!=5)%>%
@@ -107,7 +109,7 @@ sfn_soildat %>% filter(datetime>as.Date("2023-10-27")&
 
 
 # graph data only from 5cm 
-sfn_soildat %>% filter(datetime>as.Date("2023-10-27")&
+sfn_soildat %>% filter(datetime>as.Date(checkdate)&
                          #probe.num %in% c(NA,1,2,3)&
                         metric %in% c("T","Temp","VWC","WaterPot")&
                          depth==5)%>%

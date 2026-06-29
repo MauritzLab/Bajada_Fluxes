@@ -19,16 +19,15 @@ library(dplyr)
 
 # ENTER YEAR TO CHECK HERE
 
-yeartocheck <- 2025
-
-#yeartocheck <- 2023 
+yeartocheck <- 2026
 
 
 # get windrose function, source directly from Github
 #source("~/Desktop/R/R_programs/Functions/plot.windrose.R")
 source(paste0("https://raw.githubusercontent.com/MargueriteM/R_functions/master/plot.windrose.R"))
 
-basedir <- "Y:/Bahada/CR3000/L1"
+# basedir <- "Y:/Bahada/CR3000/L1"
+basedir <- "C:/Users/memauritz/OneDrive - University of Texas at El Paso/Bahada/CR3000/L1"
 
 #basedir <- "C:/Users/vmartinez62/OneDrive - University of Texas at El Paso/CZO_Data/Bahada/CR3000/L1"
 
@@ -459,3 +458,49 @@ renderPlot({
  theme_bw()})
 
 ```
+
+# Summary Calculations 
+
+Column {.sidebar}
+---------------------------------------
+
+###Select Date Range and variables
+
+These graphs show most recent incoming eddy covariance and ancillary data from the tower at the Jornada Bahada Site. Data are summarised for selected timeframe.
+
+
+#### Last timestamp when data sent to server:
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+
+print(max(flux$TIMESTAMP))
+```
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+
+dateRangeInput("daterange4", "Date range:",
+                 start = min(flux$date),
+                 end   = max(flux$date),
+                 min = min(flux$date),
+                 max = max(flux$date))
+ 
+```
+
+
+Column
+-------------------------------------------------------------
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+# calculate cumulative rainfall, mean/max/min temp
+renderTable({
+    c <- flux[date >= input$daterange4[[1]] & date <= input$daterange4[[2]],.SD,.SDcols=c("date","date_time","precip_Tot","t_hmp_mean")]
+  
+c_summary <- c %>%
+  summarise(Total_Rainfall_mm = sum(precip_Tot, na.rm=TRUE),
+            AirTemp_max_C = max(t_hmp_mean, na.rm=TRUE),
+            AirTemp_mean_C = mean(t_hmp_mean, na.rm=TRUE),
+            AirTemp_min_C = min(t_hmp_mean, na.rm=TRUE))
+})
+
+```
+

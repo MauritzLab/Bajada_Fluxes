@@ -14,10 +14,13 @@ library(cowplot)
 # list all files on E drive for ts_data2 subsampled to 1 minute
 #ts_files <- list.files(path="/Volumes/Data/Bahada/CR3000/L1/EddyCovariance_ts_2/2024_1min", full.names=TRUE) 
 #ts_files <- list.files(path="C:/Users/vmartinez62/OneDrive - University of Texas at El Paso/CZO_Data/Bahada/CR3000/L1/EddyCovariance_ts_2/2024_1min", full.names=TRUE)
-ts_files <- list.files(path="Y:/Bahada/CR3000/L1/EddyCovariance_ts_2/2025_1min", full.names=TRUE)
+#ts_files <- list.files(path="Y:/Bahada/CR3000/L1/EddyCovariance_ts_2/2026_1min", full.names=TRUE)
+
+ts_files <- list.files(path="C:/Users/memauritz/OneDrive - University of Texas at El Paso/Bahada/CR3000/L1/EddyCovariance_ts_2/2026_1min", full.names=TRUE)
 
 # read and merge all files
-ts.all <- do.call("rbind", lapply(ts_files, header = FALSE, fread, sep=",", skip = 4,fill=TRUE,
+# Modify files to read in to keep more manageable overall file length
+ts.all <- do.call("rbind", lapply(ts_files[147:172], header = FALSE, fread, sep=",", skip = 4,fill=TRUE,
                               na.strings=c(-9999,"#NAME?"),
                               col.names=c("TIMESTAMP",
                                           "RECORD",
@@ -32,7 +35,7 @@ ts.all <- do.call("rbind", lapply(ts_files, header = FALSE, fread, sep=",", skip
 max(ts.all$TIMESTAMP)
 
 # MODIFY AS NEEDED: subset the data to include only the last month (or since desired date)
-ts <- copy(ts.all[TIMESTAMP>as.Date("2024-07-05")])
+ts <- copy(ts.all[TIMESTAMP>as.Date("2026-04-01")])
 
 # CO2 concentrations
 # Check: how well do patterns match between open and closed path
@@ -117,7 +120,7 @@ p.T.sonic <- ggplot(ts, aes(TIMESTAMP, Ts))+
 # Check: do patterns and magnitudes match?
 plot_grid(p.T.c, p.T.sonic)
 
-# graph 1:1 of sonic and open path temp
+# graph 1:1 of sonic and closed path temp
 ggplot(ts, aes(Ts, tmpr_avg_7200_raw))+
   geom_point(size=1)+
   geom_abline(intercept=0,slope=1, colour="red", linetype="dashed")+
@@ -129,6 +132,13 @@ ggplot(ts, aes(TIMESTAMP, press_tot_7200_raw))+
   geom_point(size=1)+
   geom_line(linewidth=0.5)+
   labs(title="Closed Path 7200 Atmospheric Pressure")
+
+# graph 1:1 of closed path pressure and atm_press (where is atm_press measured??? 7500?? or is it in he DL box?)
+# they don't match. Do these make sense to compare?! Not sure. 
+ggplot(ts, aes(atm_press,press_tot_7200_raw))+
+  geom_point(size=1)+
+  geom_abline(intercept=0,slope=1, colour="red", linetype="dashed")+
+  labs(title="Atmospheric Pressure: atm_press vs Closed Path")
 
 #-----------
   
