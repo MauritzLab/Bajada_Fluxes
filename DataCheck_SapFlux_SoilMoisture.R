@@ -39,7 +39,7 @@ sfn_soildat1 <- fread("BajadaCR1000XSapFlowSoilMoisture_SoilData_SapFlow.dat",
 sfn_files <- list.files(path=basedir,full.names=TRUE, pattern="26185.Sapflow_Soil")
 
 # import and combine data from sfn_files, select specific files
-sfn_soildat2 <- do.call("rbind", lapply(sfn_files[32:34], header = FALSE, fread, sep=",", dec=".",skip = 4,
+sfn_soildat2 <- do.call("rbind", lapply(sfn_files[32:35], header = FALSE, fread, sep=",", dec=".",skip = 4,
                                        fill=TRUE, na.strings=c(-9999,"#NAME?"), col.names=colnames(sfn_soildat_colnames1)))
 
 # read metadata for probe IDs (accurate after 10-27-2023 when probes were moved from mesquite 2 to 5cm at M1, C2, bare)
@@ -79,7 +79,7 @@ sfn_soildat %>% filter(datetime>as.Date("2025-11-20")&
 #creosote_1 does not have 5cm probe sensor
 
 # SET  A CHECK DATE TO EASILY GRAPH ALL DATA FROM THE SPECIFIED START DATE
-checkdate <- as.Date("2026-04-30")
+checkdate <- as.Date("2026-06-30")
 
 # graph data by metric and color by number
 sfn_soildat %>% filter(datetime>as.Date(checkdate)&
