@@ -20,7 +20,7 @@ ts_files <- list.files(path="C:/Users/memauritz/OneDrive - University of Texas a
 
 # read and merge all files
 # Modify files to read in to keep more manageable overall file length
-ts.all <- do.call("rbind", lapply(ts_files[173:200], header = FALSE, fread, sep=",", skip = 4,fill=TRUE,
+ts.all <- do.call("rbind", lapply(ts_files[200:242], header = FALSE, fread, sep=",", skip = 4,fill=TRUE,
                               na.strings=c(-9999,"#NAME?"),
                               col.names=c("TIMESTAMP",
                                           "RECORD",
@@ -103,6 +103,9 @@ plot_grid(p.sigs.c,p.agc.o)
 # plot signal strength with CO2 concentration to see alignment
 plot_grid(p.co2.c,p.co2.o,
           p.sigs.c,p.agc.o, align="hv")
+
+# get most recent AGC values
+tail(ts)
 
 # graph temperature of closed path and sonic
 # Check: do patterns and magnitudes match?
